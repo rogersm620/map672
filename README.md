@@ -1,4 +1,4 @@
-# Welcome to Ryan's map672 extravaganza
+# MAP 672 Modules for Ryan Rogers
 
 
 I know absolutely zero JavaScript. Literally none. This is going to be interesting.
