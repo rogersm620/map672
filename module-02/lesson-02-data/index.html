@@ -7,23 +7,61 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <style>
-        /* CSS style rules go here! */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #fffff8;
+            font-family: sans-serif;
+            color: #111;
+        }
+        h1 {
+            color: darkred;
+            font-size: 1.6em;
+            margin-left: 25px;
+        }
+        h2 {
+            color: darkred;
+            font-size: 1.4em;
+            margin-left: 25px;
+        }
+        p {
+            font-size: 1em;
+            margin: 15px 25px;
+            max-width: 800px;
+        }
+        a {
+            color: darkgoldenrod;
+            font-weight: bold;
+            text-decoration: none; 
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        img {
+            margin-left: 25px;
+            border: 5px solid darkred;
         
+        }
     </style>
 </head>
 
 <body>
 <!-- Structured HTML goes within the body tags -->
     
-    <h1>heading 1</h1>
-    <h2>heading 2</h2>
-    <p>paragraph: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus.</p>
-    <img src="images/world.png" alt="world map">
+    <h1>The Dot Projection</h1>
+    <h2>The World According to a Dot Matrix Printer</h2>
+    <p>While the "Cartographic Gaze" may still largely follow the practices described in the excerpt from <i>A History of Spaces: Cartographic Reason, Mapping and the Geo-Coded World</i>, many cartographers are pushing the bounds of it's "accepted universal logic." While these maps still adhere to some parametric commitments, they rely on the human brain's pattern recognition ability (and good design) to fill in details, while focusing on the information they are trying to convey; even eschewing some traditional commitments (such as scale), for the purpose of emphasizing certain details. A good example of this practice can be seen <a href="http://i.imgur.com/zQg1M2A.png">here</a>. As a non sequitur, <a href="https://baconipsum.com">here is a link to some smoked meats</a>.</p>
+    
+    <img src="images/world2.png" alt="world map" id="map">
     <p>paragraph with link: <a href="https://en.wikipedia.org/wiki/Lorem_ipsum">Lorem ipsum</a> dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. Duis a elit eget risus dictum vehicula id eu elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sed enim nisl.</p>
     <ul>
         <li>un-ordered list item 1</li>
         <li>list item 2</li>
         <li>list item 3</li>
+        <li><a href="http://leafletjs.com">Leaflet</a></li>
+        <li><a href="https://www.mapbox.com">Mapbox</a></li>
+        <li><a href="https://cartodb.com">CartoDB</a></li>
+        <li><a href="http://d3js.org">Data-Driven Documents</a></li>
     </ul>
     <div id="box"></div>
     <div class="circle"></div>
