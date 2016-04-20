@@ -4,7 +4,7 @@
 I know absolutely zero JavaScript. Literally none. This is going to be interesting.
 
 
-##My Learning Objectives
+## My Learning Objectives
 
 * Get comfortable with Git and GitHub
 * Learn JavaScript, HTML, and CSS
