@@ -5,13 +5,14 @@
     <meta charset=utf-8 />
     <title>MAP672 Module 2 Template</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
     <style>
         body {
             margin: 0;
             padding: 0;
             background: #fffff8;
-            font-family: sans-serif;
+            font-family: arial, helvetica, sans-serif;
             color: #111;
         }
         h1 {
@@ -25,6 +26,7 @@
             margin-left: 25px;
         }
         p {
+            font-family: georgia, serif;
             font-size: 1em;
             margin: 15px 25px;
             max-width: 800px;
@@ -42,9 +44,23 @@
             border: 5px solid darkred;
         
         }
+        #box {
+            width: 200px;
+            height: 200px;
+            background: #3e6b93;
+            margin: 25px;
+        }
+        .circle {
+            width: 100px;
+            height: 100px;
+            background: #bf6864;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 25px;
+        }
     </style>
 </head>
-
+<!--comment comment comment comment comment-->
 <body>
 <!-- Structured HTML goes within the body tags -->
     
@@ -70,6 +86,25 @@
 
     <script>
         // JavaScript code goes here  
+        document.querySelector('h1').innerHTML = 'web mapping is sweet!';
+        
+        var box = document.getElementById('box');
+        box.style.background = '#4d4a9f';
+        
+        var elements = document.getElementsByClassName('circle');
+        for(var i=0; i <= elements.length-1;i++){
+            elements[i].style['border-radius'] = '20%';
+        }
+        
+        box.addEventListener('click', function() {
+            this.style.width = '400px'
+        });
+        
+        var newListItem = document.createElement('Li');
+        newListItem.innerHTML = "list item 4";
+        document.querySelector('ul').appendChild(newListItem);
+        
+        console.log("hello map");
         
     </script>
     
