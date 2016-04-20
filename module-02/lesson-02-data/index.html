@@ -11,15 +11,17 @@
         body {
             margin: 0;
             padding: 0;
-            background: #fffff8;
+            background: lightblue;
             font-family: arial, helvetica, sans-serif;
             color: #111;
         }
+/* Applying specific style elements to the h1 heading*/
         h1 {
             color: darkred;
             font-size: 1.6em;
             margin-left: 25px;
         }
+/* Applying specific style elements to the h2 subheading*/
         h2 {
             color: darkred;
             font-size: 1.4em;
@@ -44,12 +46,14 @@
             border: 5px solid darkred;
         
         }
+/* These style rules apply to the unique division element with the id='box'*/
         #box {
             width: 200px;
             height: 200px;
             background: #3e6b93;
             margin: 25px;
         }
+/*These style rules apply to any division element with the class attribute of 'circle'*/
         .circle {
             width: 100px;
             height: 100px;
@@ -58,9 +62,14 @@
             display: inline-block;
             margin: 0 25px;
         }
+        
+        #map {
+            width: 60%;
+            margin: 25px;
+        }
     </style>
 </head>
-<!--comment comment comment comment comment-->
+    
 <body>
 <!-- Structured HTML goes within the body tags -->
     
@@ -69,6 +78,8 @@
     <p>While the "Cartographic Gaze" may still largely follow the practices described in the excerpt from <i>A History of Spaces: Cartographic Reason, Mapping and the Geo-Coded World</i>, many cartographers are pushing the bounds of it's "accepted universal logic." While these maps still adhere to some parametric commitments, they rely on the human brain's pattern recognition ability (and good design) to fill in details, while focusing on the information they are trying to convey; even eschewing some traditional commitments (such as scale), for the purpose of emphasizing certain details. A good example of this practice can be seen <a href="http://i.imgur.com/zQg1M2A.png">here</a>. As a non sequitur, <a href="https://baconipsum.com">here is a link to some smoked meats</a>.</p>
     
     <img src="images/world2.png" alt="world map" id="map">
+    
+<!--Lorem ipsum is text used to demponstrate the graphical elements of text without distracting the reader with actual content. Wikipedia link included.-->
     <p>paragraph with link: <a href="https://en.wikipedia.org/wiki/Lorem_ipsum">Lorem ipsum</a> dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. Duis a elit eget risus dictum vehicula id eu elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sed enim nisl.</p>
     <ul>
         <li>un-ordered list item 1</li>
@@ -79,6 +90,8 @@
         <li><a href="https://cartodb.com">CartoDB</a></li>
         <li><a href="http://d3js.org">Data-Driven Documents</a></li>
     </ul>
+    
+<!--This tag selects for an unique item with the id of 'box', which is described in the CSS rules above.-->
     <div id="box"></div>
     <div class="circle"></div>
     <div class="circle"></div>
@@ -96,6 +109,7 @@
             elements[i].style['border-radius'] = '20%';
         }
         
+//This script waits for the user to perform a click action, before running
         box.addEventListener('click', function() {
             this.style.width = '400px'
         });
