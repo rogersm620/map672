@@ -102,7 +102,37 @@
     ];
     console.log(twoDArray);
     
-
+    var cities = ["Frankfort", "Louisville", "Lexington"];
+    console.log(cities[0]); // outputs the string "Frankfort"
+    
+    var cities = ["Frankfort", "Louisville", "Lexington"];
+    console.log(cities[0]); // outputs the string "Frankfort"
+    console.log(cities[1]); // outputs the string "Louisville"
+    console.log(cities[2]); // outputs the string "Lexington"
+    console.log(cities[3]); // outputs undefined
+    
+    var twoDArray = [
+        ["Frankfort", "Louisville", "Lexington"],
+        [25527, 756832, 308428],
+        ["Frankfort", 756832, false]
+    ];
+    console.log(twoDArray [0] [2]); //output will be Lexington
+    console.log(twoDArray [2] [1]); //output will be 756832
+    
+    var years = [2010, 2011, 2022, 2013, 2014];
+    console.log(years);
+    years[2] = 2012;
+    console.log(years); //array has been updated
+    
+    var counties = [];
+    console.log(counties); //output is an emtpy array
+    counties[0] = "Adair";
+    console.log(counties); //output is single item array ["Adair"]
+    counties[1] = "Allen";
+    console.log(counties); //output is now ["Adair", "Allen"]
+    counties[5] = "Anderson";
+    console.log(counties); //output is now ["Adiar", "Allen", 5: "Anderson"]
+    
 </script>
     
 </body>
