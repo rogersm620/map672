@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Lab 03 Starter Template</title>
+    <title>Quarrel for the Capital</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
@@ -124,7 +124,7 @@
         
         // CITY1 MARKER CODE HERE
         var city1Popup = "<b>"+city1Name+"</b><br>"
-                        +"<b>population</b>: "+city1Pop;
+                        +"<b>population</b>: "+city1Pop.toLocaleString();
         
         if(city1Capital == true) {
             city1Popup += "<br>Capital of the Commonwealth of Kentucky";   
@@ -135,7 +135,7 @@
         
        // CITY2 MARKER CODE HERE
        var city2Popup = "<b>"+city2Name+"</b><br>"
-                       +"<b>population</b>: "+city2Pop;
+                       +"<b>population</b>: "+city2Pop.toLocaleString();
        
        if(city2Capital == true) {
             city2Popup += "<br>Capital of the Commonwealth of Kentucky";   
@@ -146,7 +146,7 @@
         
        // CITY3 MARKER CODE HERE
        var city3Popup = "<b>"+city3Name+"</b><br>"
-                       +"<b>population</b>: "+city3Pop;
+                       +"<b>population</b>: "+city3Pop.toLocaleString();
        
        if(city3Capital == true) {
            city3Popup += "<br>Capital of the Commonwealth of Kentucky";   
