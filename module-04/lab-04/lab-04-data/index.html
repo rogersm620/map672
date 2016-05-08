@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Lab 04 Starter Template</title>
+    <title>Largest American Cities by Continent</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
@@ -15,20 +15,24 @@
         body {
             margin: 0;
             padding: 0;
-            background: whitesmoke;
+            background: khaki;
             font-family: Lato, sans-serif;
+            font-size: .8em;
             color: #0D0000;
         }
         header {
-            padding: 6px 10%;
+            padding: 5px 10%;
         }
         h1 {
             display: inline-block;
             margin-right: 20px;
-            color: #001323;
+            font-family: Georgia, serif;
+            color: #5d871d;
         }
         h2 {
             display: inline-block;
+            font-family: Georgia, serif;
+            font-size: 1.3em;
             color: #001323;
         }
         #map {
@@ -44,6 +48,14 @@
             font-size: 1em;
             color: #001323;
         }
+        a {
+            color: #5d871d;
+            font-weight: bold;
+            text-decoration: none; 
+        }
+        a:hover {
+            text-decoration: underline;
+        }
         /* Additional style rules go here! */
 
     </style>
@@ -51,17 +63,17 @@
 
 <body>
     <header>
-        <h1>Map Title</h1>
-        <h2>Map Subtitle</h2>
+        <h1>Largest American Cities by Continent</h1>
+        <h2>The most populous city for each of the North and South American continents and Central American isthmus.</h2>
     </header>
 
     <div id='map'></div>
 
     <footer>
-        <p>Map authored by YOUR NAME</p>
-        <p>Additional information about the data and map goes here.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. Duis a elit eget risus dictum vehicula id eu elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sed enim nisl. Vestibulum commodo imperdiet lacus, sed facilisis erat placerat sit amet. Nulla consequat malesuada neque eget aliquet. Integer non convallis nisl, gravida ultrices ex. Fusce nec vestibulum elit. Sed elementum lectus ipsum, vulputate elementum ex laoreet a. Aenean eu ex varius, varius felis vitae, efficitur nulla. Quisque pretium laoreet ante, in sodales dui vehicula at. Mauris eu sem sapien.
+        <p>For this map, the largest city, by population, was selected for North America, Central America, and South America. North America is Canda, The United States, and Mexico. Central America is the southern isthmus of North America, consisting of Belize, Costa Rica, El Salvador, Guatemala, Honduras, Nicaragua, and Panama. South America is Argentina, Bolivia, Brazil, Chile, Colombia, Ecuador, Guiana, Guyana, Paraguay, Peru, Suriname, Uraguay, and Venezuela.
         </p>
+        <p>Map authored by Ryan Rogers, 2016.</p>
+        <p>Map data provided by <a href="http://www.esri.com">Esri</a>. Population data is from the <a href="http://ibge.gov.br/home/">Brazilian Institute of Geography and Statistics</a>, the <a href="https://www.un.org/development/desa/en/">United Nations Department of Economic and Social Affairs</a>, and the <a href="http://www.inegi.org.mx">National Institute of Statistics and Geography (Mexico)</a>.</p>
     </footer>
 
     <script>
@@ -69,8 +81,8 @@
         var targetDiv = 'map';
 
         var options = {
-            center: [0, 0],
-            zoom: 2
+            center: [0.138713, -68.483648], //centered over north-western Brazil
+            zoom: 3 //zoomed in to fill map
         }
         map = L.map(targetDiv, options);
         var tiles = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
@@ -80,21 +92,30 @@
         
         // begin writing/editing Lab 04 code here
         
+        var cities = ["Sao Paulo", "Guatamala City", "Mexico City"]; //array containing cities
+        var cityCoords = [
+            [-23.55, -46.633333],
+            [14.613333, -90.535278],
+            [19.433333, -99.133333]
+        ]; //array containing coordinates
+        var cityPops = [11895893, 2110100, 8918653]; //array containing city populations
+        var cityCapital = [false, true, true]; //array determining if city is capital
+        
 
-//        for(/* add code here */) {
-//            
-//            var popup = "<b>"+/* add code here */+"</b><br>"
-//                            +"<b>population</b>: "+/* add code here */;
-//
-//            if(/* add code here */) {
-//               
-//                popup += "<br>Is the capital city."; 
-//                
-//            } 
-//            
-//            L.marker(/* add code here */).addTo(map)
-//                .bindPopup(popup);
-//        }
+        for(var i = 0; i < cities.length; i++) {
+            
+            var popup = "<b>"+cities[i]+"</b><br>"
+                            +"<b>population</b>: "+cityPops[i].toLocaleString();
+
+            if(cityCapital[i] == true) {
+               
+                popup += "<br>Is the capital city."; 
+                
+            } 
+            
+            L.marker(cityCoords[i]).addTo(map)
+                .bindPopup(popup);
+        }
         
         // end writing/editing Lab 04 code here
         
