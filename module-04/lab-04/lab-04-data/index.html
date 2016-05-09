@@ -56,7 +56,9 @@
         a:hover {
             text-decoration: underline;
         }
-        /* Additional style rules go here! */
+        .city-name {
+            font-size: 1.3em;
+        }
 
     </style>
 </head>
@@ -90,8 +92,6 @@
 });
         map.addLayer(tiles);
         
-        // begin writing/editing Lab 04 code here
-        
         var cities = ["Sao Paulo", "Guatamala City", "Mexico City"]; //array containing cities
         var cityCoords = [
             [-23.55, -46.633333],
@@ -104,7 +104,7 @@
 
         for(var i = 0; i < cities.length; i++) {
             
-            var popup = "<b>"+cities[i]+"</b><br>"
+            var popup = "<b><span class='city-name'>"+cities[i]+"</span></b><br>"
                             +"<b>population</b>: "+cityPops[i].toLocaleString();
 
             if(cityCapital[i] == true) {
@@ -116,8 +116,6 @@
             L.marker(cityCoords[i]).addTo(map)
                 .bindPopup(popup);
         }
-        
-        // end writing/editing Lab 04 code here
         
           
     </script>
