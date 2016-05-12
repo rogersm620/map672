@@ -12,6 +12,37 @@
 
 <script>
 /* JavaScript code goes here! */
+    
+    helloMap(); //this statement calls or invokes the helloMap() function.
+    
+    function helloMap() {
+        console.log("Hello Map");
+    }
+    
+    helloMap(); //this statement calls or invokes the helloMap() function.
+    
+    var helloMap = function() {
+        console.log("Hello Map");
+    };
+    
+    helloMap();
+    
+    function outerFunction(message) {
+        console.log(message);
+        var innerFunction = function (message) {
+            console.log(message);    
+        };
+        innerFunction("I'm inside!");
+    }
+    outerFunction("I'm outside!");
+    
+    function saySomething(message) { //function signature accepts information as a "parameter"
+        console.log(message);
+    }
+    
+    saySomething("Hello Map");  //function is called, passing an "argument" with it
+    saySomething("Please enter the address you'd like to search for.");
+    
 
 </script>
     
