@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Lab 05 Starter Template</title>
+    <title>I35 Corridor Cities</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
@@ -15,9 +15,9 @@
         body {
             margin: 0;
             padding: 0;
-            background: whitesmoke;
+            background: black;
             font-family: Lato, sans-serif;
-            color: #0D0000;
+            color: whitesmoke;
         }
         header {
             padding: 6px 10%;
@@ -25,11 +25,11 @@
         h1 {
             display: inline-block;
             margin-right: 20px;
-            color: #001323;
+            color: ghostwhite;
         }
         h2 {
             display: inline-block;
-            color: #001323;
+            color: ghostwhite;
         }
         #map {
             width: 80%;
@@ -42,11 +42,19 @@
         }
         p {
             font-size: 1em;
-            color: #001323;
+            color: whitesmoke;
         }
         button {
             font-size: 1.2em;
             margin-left: 10%;
+        }
+        a {
+            color: darkgoldenrod;
+            font-weight: bold;
+            text-decoration: none; 
+        }
+        a:hover {
+            text-decoration: underline;
         }
         /* Additional style rules go here! */
         
@@ -56,25 +64,25 @@
 
 <body>
     <header>
-        <h1>Map Title</h1>
-        <h2>Map Subtitle</h2>
+        <h1>I35 Corridor Cities</h1>
+        <h2>Major Cities situated along the I35 Corridor</h2>
     </header>
 
     <div id='map'></div>
     <button id='map-cities'>Map Cities</button>
     <footer>
-        <p>Map authored by YOUR NAME</p>
-        <p>Additional information about the data and map goes here.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. Duis a elit eget risus dictum vehicula id eu elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sed enim nisl.
+        <p>Many of Texas' largest cities are located along the Interstate 35 corridor. I35 is also a considered a superhighway for NAFTA (North American Free Trade Agreement), and atleast one section is listed as one of the most congested roads in the United States (I35 through Austin).
         </p>
+        <p>Map authored by Ryan Rogers, 2016.</p>
+        <p>Map data provided by <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> and <a href="http://www.cartodb.com">CartoDB</a>. Population data is from the <a href="http://www.census.gov">U.S. Census Bureau</a>.
     </footer>
 
 <script>
     
     // map options
     var options = {
-        center: [20,-20],
-        zoom: 2
+        center: [32.363681, -99.589681],
+        zoom: 6
     }
     
     // creates the Leaflet map
@@ -90,27 +98,56 @@
     // adds these tiles to the map
     map.addLayer(tiles);
     
-//    var cities = // write 3 city names as Strings within an array
-//    var cityCoords = // write a two-dimensional array of the coordinates for each city
-//    var cityPops = // write the populations of the 3 cities as Numbers within an array;
-//    var cityAreas = // write the areas of the 3 cities as Numbers within an array;
+    var cities = ["Dallas", "Austin", "San Antonio"]; //cities names as Strings within an array
+    var cityCoords =[[32.775833, -96.796667], [30.25, -97.75], [29.416667, -98.5]];  //two-dimensional array of the coordinates for each city
+    var cityPops = [1197816, 912791, 1436697]; //populations of the 3 cities as Numbers within an array;
+    var cityAreas = [385.8, 271.8, 465.4]; //areas of the 3 cities as Numbers within an array;
         
     var button = document.getElementById("map-cities");
     
     button.addEventListener("click", function() {
          
-        var units = prompt('Enter the units for calculating density', 'Enter "miles" or "km"');
-        
-        console.log(units);
+    var units =prompt('Enter the units for calculating density', 'Enter "miles" or "km"');
+       
+        mapCities(units);
         
         // call a function named mapCities, and send the units variable as an argument
         
     }); // addEventListener callback function ends here
     
     
-    // write a function here named mapCities so that it accepts units as a parameter
+    function mapCities(units) {
+        for(var i=0; i < cities.length; i++) {
+          
+           var density= calcPopDensity(cityPops[i], cityAreas[i], units);
+            
+           var popup = "<b><span class='city-name'>"+cities[i]+"</span></b><br>"
+                            +"<b>Pop. Density</b>: "+density.toLocaleString();
+
+            if(units == 'miles') {
+               popup += " /sq mi"; 
+             } else if(units == 'km') {
+               popup += " /sq km"; 
+             }
+            
+            L.marker(cityCoords[i]).addTo(map)
+                .bindPopup(popup);
+          }    
+    }   // write a function here named mapCities so that it accepts units as a parameter
     
     
+    function calcPopDensity(cityPops, cityArea, units) {
+        var pop = cityPops;
+            
+            if(units == 'miles') {
+                var area = cityArea
+            } else if(units == 'km') {
+                var area = cityArea * 1.60934;
+            } else { 
+                console.log("nope");
+            }
+        return pop/area;
+    }
     // write a function named calcPopDensity here so that it accepts a single city's
     // population, area, and the value for units determined by the user
 
