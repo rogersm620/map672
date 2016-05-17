@@ -17,7 +17,7 @@
             padding: 0;
             background: black;
             font-family: Lato, sans-serif;
-            color: whitesmoke;
+/*            color: whitesmoke;*/
         }
         header {
             padding: 6px 10%;
@@ -106,8 +106,10 @@
     var button = document.getElementById("map-cities");
     
     button.addEventListener("click", function() {
-         
-    var units =prompt('Enter the units for calculating density', 'Enter "miles" or "km"');
+        
+        do {
+            var units =prompt('Enter the units for calculating density', 'Enter "miles" or "km"');
+        } while (units != "miles" && units != "km")
        
         mapCities(units);
         
@@ -136,22 +138,18 @@
     }   // write a function here named mapCities so that it accepts units as a parameter
     
     
-    function calcPopDensity(cityPops, cityArea, units) {
-        var pop = cityPops;
+    function calcPopDensity(pop, cityArea, units) {
             
-            if(units == 'miles') {
-                var area = cityArea
-            } else if(units == 'km') {
-                var area = cityArea * 1.60934;
-            } else { 
-                console.log("nope");
-            }
+        if(units == 'miles') {
+            var area = cityArea
+        } else if(units == 'km') {
+            var area = cityArea * 2.58999; // calc for square km
+        } else { 
+            console.log("nope");
+        }
         return pop/area;
     }
-    // write a function named calcPopDensity here so that it accepts a single city's
-    // population, area, and the value for units determined by the user
 
-    
     
     
     
