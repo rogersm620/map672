@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Lab 06 Starter Template</title>
+    <title>US Olympic Host</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
@@ -15,21 +15,23 @@
         body {
             margin: 0;
             padding: 0;
-            background: whitesmoke;
+            background: #00298C;
             font-family: Lato, sans-serif;
-            color: #0D0000;
+            color: whitesmoke;
         }
         header {
             padding: 6px 10%;
         }
         h1 {
             display: inline-block;
+            font-family: Tahoma, Geneva, sans-serif;
             margin-right: 20px;
-            color: #001323;
+            color: #DE1818;
         }
         h2 {
             display: inline-block;
-            color: #001323;
+            font-size: 1.2em;
+            color: whitesmoke;
         }
         #map {
             width: 80%;
@@ -41,11 +43,25 @@
             width: 80%;
         }
         p {
-            font-size: 1em;
-            color: #001323;
+            font-size: .8em;
+            color: whitesmoke;
         }
-        .kentucky-blue {
-            color: #165bb6;
+        a {
+            color: #FFEF08;
+            font-weight: bold;
+            text-decoration: none; 
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .LA-blue {
+            color: #00298C;
+        }
+        .GA-red {
+            color: #DE1818;
+        }
+        .UT-green {
+            color: #087B39;
         }
         
     </style>
@@ -53,24 +69,25 @@
 
 <body>
     <header>
-        <h1>Map Title</h1>
-        <h2>Map Subtitle</h2>
+        <h1>U.S. Olympic Host</h1>
+        <h2>The three most recent U.S. cities to host Olympic Games</h2>
     </header>
 
     <div id='map'></div>
 
     <footer>
-        <p>Map authored by YOUR NAME</p>
-        <p>Additional information about the data and map goes here.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. Duis a elit eget risus dictum vehicula id eu elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed sed enim nisl. Vestibulum commodo imperdiet lacus, sed facilisis erat placerat sit amet. Nulla consequat malesuada neque eget aliquet. Integer non convallis nisl, gravida ultrices ex. Fusce nec vestibulum elit. Sed elementum lectus ipsum, vulputate elementum ex laoreet a. Aenean eu ex varius, varius felis vitae, efficitur nulla. Quisque pretium laoreet ante, in sodales dui vehicula at. Mauris eu sem sapien.
+        
+        <p>Los Angeles, Atlanta, and Salt Lake City are the last three cities in the United States to host the Olympic Games: Los Angeles in 1984, Atlanta in 1996, and Salt Lake City in 2002. Both the 1984 and 1996 Olympics were summer games. Salt Lake City hosted winter games in 2002. Los Angeles is currently in the running to host the 2024 Summer Games.
         </p>
+        <p>Map authored by Ryan Rogers, 2016.</p>
+        <p>Map data provided by <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>. Population data is from the <a href="http://www.census.gov">U.S. Census Bureau</a>. Olympic logos are courtsey of the <a href="http://www.olympic.org">International Olympic Committee</a>.
     </footer>
 
     <script>
 
         var map = L.map('map', {
-            center: [38.96,-85.36],
-            zoom: 8,
+            center: [39.130465, -100.523189],
+            zoom: 4,
         });
        
         var tiles = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
@@ -79,44 +96,57 @@
     });
         map.addLayer(tiles);
         
-        // Begin writing/modifying code for Lab 06 here
-        
-        var losang = [
+        var cities = [                      //city array
              {
-                 name: "Los Angeles",
+                 name: "Los Angeles",       //city object
                  properties: {
                      coordinates: [34.05, -118.25],
                      population: 13131431,
-                     state: "CA"
+                     state: "CA",
+                     logo: 'images/la1984.png'
                  }
-             }    
-        ];var atlanta = [
+             },      
              {
-                 name: "Atlanta",
+                 name: "Atlanta",           //city object
                  properties: {
                      coordinates: [33.755, -84.39],
                      population: 5522942,
-                     state: "GA"
+                     state: "GA",
+                     logo: 'images/atl1996.png'
                  }
-             }    
-        ];
-        var slc = [
+             },   
              {
-                 name: "Salt Lake City",
+                 name: "Salt Lake City",    //city object
                  properties: {
                      coordinates: [40.75, -111.883333],
                      population: 1153340,
-                     state: "UT"
+                     state: "UT",
+                     logo: 'images/slc2002.png'
                  }
              }    
         ];
         
-        var cities = [losang, atlanta, slc];
-        
         for(var i=0; i < cities.length; i++) {
-            //for loop to loop through the cities
-            console.log(cities[i]); //log statement within the body of the for loop
-            //end of the for loop
+                                                //for loop through the cities
+            var props = cities[i].properties
+            var popup = buildPopup(cities[i].name, props.population, props.state, props.logo);
+            
+            L.marker(props.coordinates).addTo(map)
+                    .bindPopup(popup);
+                                                //end of the for loop
+        }
+        
+        function buildPopup(name, pop, state, logo) {
+                                                //creates popup design
+            if(state == "CA") {                 //determines color
+                var colorClass = "LA-blue";
+            } else if(state == "GA") {
+                var colorClass = "GA-red";
+            } else if(state == "UT") {
+                var colorClass = "UT-green";
+            }
+            return "<img class='logo' src='"+ logo +"'>"+"<div class='"+colorClass+"'><b>"+name+"</b><br>"+
+                    "<b>Population</b>: "+pop.toLocaleString()+"<div>";
         }
         
             
