@@ -81,16 +81,44 @@
         
         // Begin writing/modifying code for Lab 06 here
         
-        var cities = [
+        var losang = [
              {
-                 name: "Louisville",
+                 name: "Los Angeles",
                  properties: {
-                     coordinates: [38.25, -85.7667],
-                     population: 756832,
-                     state: "KY"
+                     coordinates: [34.05, -118.25],
+                     population: 13131431,
+                     state: "CA"
+                 }
+             }    
+        ];var atlanta = [
+             {
+                 name: "Atlanta",
+                 properties: {
+                     coordinates: [33.755, -84.39],
+                     population: 5522942,
+                     state: "GA"
                  }
              }    
         ];
+        var slc = [
+             {
+                 name: "Salt Lake City",
+                 properties: {
+                     coordinates: [40.75, -111.883333],
+                     population: 1153340,
+                     state: "UT"
+                 }
+             }    
+        ];
+        
+        var cities = [losang, atlanta, slc];
+        
+        for(var i=0; i < cities.length; i++) {
+            //for loop to loop through the cities
+            console.log(cities[i]); //log statement within the body of the for loop
+            //end of the for loop
+        }
+        
             
         
           
