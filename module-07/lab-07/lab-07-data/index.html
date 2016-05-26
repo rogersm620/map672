@@ -68,12 +68,22 @@
     <script>
 
     var options = {
-        center: [40.74,-110.61],
-        zoom: 6
+        center: [40.74,-111.61],
+        zoom: 8
     }
     
     var map = L.map('map', options);
-                
+        
+    var tiles = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
+	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	subdomains: 'abcd',
+	minZoom: 0,
+	maxZoom: 20,
+	ext: 'png'
+});    
+    
+    map.addLayer(tiles);
+        
     var redIguana = L.latLng(40.7718,-111.9124);
         
     L.marker(redIguana, {
@@ -86,10 +96,26 @@
     map.on('click', function(e){
         
         // output is o.LatLng {lat: 40.863679665481676, lng: -114.57847595214842}  
-        console.log(e.latlng); 
+        console.log(e.latlng);
+        var clickLoc = e.latlng;
+        var clickMarker = L.marker(clickLoc, {
+            draggable:true,
+            riseOnHover: true
+        });
+        clickMarker.addTo(map);
+        var distance = redIguana.distanceTo(clickLoc);
+        console.log(distance); //output distance in meters
+         
+        clickMarker.on('dragend', function(e) {
+            console.log(e.latlng);
+        var newLoc = e.latlng;
+        var distanceAdj = redIguana.distanceTo(newLoc);
+       console.log(distanceAdj); //output distance in meters
+   });
+});
         
-    });
-                  
+   
+        
     </script>
     
 </body>
