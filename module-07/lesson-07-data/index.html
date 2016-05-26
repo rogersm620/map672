@@ -65,6 +65,126 @@
     <script>
 
       // build your Leaflet map here!
+        var mapCenter = L.latLng(38.0489, -96.5025); //defining a variable using L.latlng()
+        var otherCity = L.latLng(38.1489, -96.5125); 
+        var distance = mapCenter.distanceTo(otherCity);
+        console.log(distance); //will output distance between cities in meteres
+        
+        
+//        var map = L.map('map', {
+//            center: mapCenter, //using variable to center map
+//            zoom: 13
+//        }); //initialize the map on the "map" div with a given center and zoom
+        
+        var tiles = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
+	       maxZoom: 16
+            });
+//        map.addLayer(tiles);
+        
+        var options = {
+            center: [38.0489, -96.5025],
+            zoom: 4, //initial zoom level
+            minZoom: 4,
+            maxZoom: 7,
+            dragging: false,
+            zoomControl: false 
+        };
+        
+//        var map = L.map('map', options);
+//        map.addLayer(tiles);
+        
+//        map.on('click', function(e) {
+//            console.log(e.latlng);
+//        });
+        
+        var map = L.map('map');
+        map.setView([40.7718, -111.9124], 12);
+        map.addLayer(tiles);
+        
+        var center = map.getCenter();
+        console.log(center.lat, center.lng); //returns a LatLng object
+        var zoom = map.getZoom();
+        console.log(zoom); //returns a Number
+        var bounds = map.getBounds();
+        console.log(bounds); //returns a LatLngBounds object
+        var bottomLeft = bounds.getSouthWest(); //returns a LatLng object
+        console.log(bottomLeft.lat, bottomLeft.lng); //outputs the lat and lng vaules
+        
+//        var redIguanaLocation = L.latLng(40.7718, -111.9124);
+//        var redIguanaMarker = L.marker(redIguanaLocation, {
+//            draggable: true
+//        });
+//        redIguanaMarker.addTo(map);
+//        redIguanaMarker.on('drag', function(e) {
+//            console.log(e.target.getLatLng());
+//        });
+//        redIguanaMarker.bindPopup("Best Mexican food in Salt Lake City!");
+        
+//        var redIguanaCircle = L.circle(redIguanaLocation, 400, {
+//            color: "#d72b1e", //changes the stroke color
+//            fillColor: "#d72b1e" //changes the fill color
+//        });
+//        redIguanaCircle.addTo(map);
+//        
+//        var giantSpot = L.latLng(38.0489, -96.5025);
+//        var giantCircle = L.circle(giantSpot, 400000);
+//        giantCircle.addTo(map);
+//        
+//        redIguanaCircle.setStyle({
+//            color: "#d72b1e", //sets stroke color to red
+//            weight: 15, //sets the stroke width to 15 pixels
+//            fillColor: "#d72b1e", //sets fill color to red
+//            fillOpacity: 1 //sets the fill opacity to 1
+//        });
+//        
+//        var redIguanaLocation = L.latLng(40.7718, -111.9124);
+//        var redIguanaCircleTwo = L.circle();
+//        redIguanaCircleTwo.setLatLng(redIguanaLocation);
+//        redIguanaCircleTwo.setRadius(4000);
+//        redIguanaCircleTwo.addTo(map);
+        
+        var iguanaRestaurants = L.layerGroup(); //creates layer group
+        
+        var redIguanaOptions = {  //sets options for redIguana
+            color: 'red',
+            fillColor: 'red'
+        };
+        var blueIguanaOptions = { //sets options for blueIguana
+            color: '#03f',
+            fillColor: ' #03f'
+        };
+        
+        var redIguana = L.circle([40.7718, -111.9124], 400, redIguanaOptions); //draws circle for redIguana
+        redIguana.color = 'red';    //adds new 'color' value to redIguana, for id below
+        redIguana.addTo(iguanaRestaurants);     //adds redIguana to iguanaRestaurants layer group
+        var blueIguana = L.circle([40.7657, -111.8930], 300, blueIguanaOptions);    //draws circle for blueIguana
+        blueIguana.color = 'blue';  //adds new 'color' value to blueIguana, for id below
+        blueIguana.addTo(iguanaRestaurants); //adds blueIguana to iguanaRestaurants layer group
+        iguanaRestaurants.addTo(map); //adds iguanaRestaurants layer group to map
+        
+        iguanaRestaurants.eachLayer(function(layer) {   //adds function to each layer of group
+            layer.on ('mouseover', function(e) {        //layer listens for mouseover to perform function
+                e.target.setStyle({                     //changes color/fill on mouseover event
+                    color: "yellow",
+                    fillColor: "yellow"
+                });
+            });
+            layer.on('mouseout', function(e) {          //layer listens for mouseout to perform function
+                if(e.target.color == 'red') {           //changes color/fill on mouseout event,if color id is red, 
+                    e.target.setStyle(redIguanaOptions);    //follow redIguanaOptions
+                } else if (e.target.color == 'blue') {      //if color id is blue,
+                    e.target.setStyle(blueIguanaOptions);   //follow blueIguanaOptions
+                }
+        });
+        });
+        
+        
+        
+        
+        
+        
+        
                   
     </script>
     
