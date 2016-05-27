@@ -15,7 +15,7 @@
         body {
             margin: 0;
             padding: 0;
-            background: whitesmoke;
+            background: #b30000;
             font-family: Lato, sans-serif;
             color: #0D0000;
         }
@@ -29,7 +29,7 @@
         }
         h2 {
             display: inline-block;
-            color: #001323;
+            color: ghostwhite;
         }
         #map {
             width: 80%;
@@ -41,9 +41,18 @@
             width: 80%;
         }
         p {
-            font-size: 1em;
-            color: #001323;
+            font-size: .8em;
+            color: whitesmoke;
         }
+        a {
+            color: #FFEF08;
+            font-weight: bold;
+            text-decoration: none; 
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        
         /* Additional style rules go here! */
         
 
@@ -52,8 +61,8 @@
 
 <body>
     <header>
-        <h1>Map Title</h1>
-        <h2>Map Subtitle</h2>
+        <h1><img src="images/RILogoSticker2100.png" alt="Red Iguana" id="iguana"></h1>
+        <h2>Just how far are you from Red Iguana?</h2>
     </header>
 
     <div id='map'></div>
@@ -93,25 +102,44 @@
         })
     }).addTo(map);
         
+        var markerGroup = L.layerGroup();
+        
     map.on('click', function(e){
         
+        removeMarker(markerGroup);
         // output is o.LatLng {lat: 40.863679665481676, lng: -114.57847595214842}  
-        console.log(e.latlng);
         var clickLoc = e.latlng;
         var clickMarker = L.marker(clickLoc, {
-            draggable:true,
-            riseOnHover: true
+            draggable:true
         });
-        clickMarker.addTo(map);
-        var distance = redIguana.distanceTo(clickLoc);
-        console.log(distance); //output distance in meters
+        function removeMarker(group) {
+            var group = markerGroup 
+            markerGroup.removeLayer();
+        };
+       
+        
+        var distance = redIguana.distanceTo(clickLoc);   //distance to redIguana
+        
+        function tokm(meters){
+            var meters = distance
+            return meters/1000;
+        }
+  
+        var distancekm = tokm(distance);
+        var popup = "<b>Distance to Tacos:</b><br>"
+                        +distancekm.toLocaleString()+"<b> km</b><div>"
+                    
+        clickMarker.addTo(map).bindPopup(popup).openPopup();
+        clickMarker.addTo(markerGroup);
+        
          
-        clickMarker.on('dragend', function(e) {
-            console.log(e.latlng);
-        var newLoc = e.latlng;
+        clickMarker.on('dragend', function(e) {  //change distance to redIguana
+        var newLoc = clickMarker.getLatLng();
         var distanceAdj = redIguana.distanceTo(newLoc);
-       console.log(distanceAdj); //output distance in meters
+        var distance = distanceAdj
+        
    });
+        
 });
         
    
