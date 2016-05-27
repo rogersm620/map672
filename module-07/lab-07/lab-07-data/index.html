@@ -105,19 +105,13 @@
         var markerGroup = L.layerGroup();
         
     map.on('click', function(e){
-        
-        removeMarker(markerGroup);
-        // output is o.LatLng {lat: 40.863679665481676, lng: -114.57847595214842}  
+        markerGroup.clearLayers(clickMarker); //clears previous marker
+ 
         var clickLoc = e.latlng;
         var clickMarker = L.marker(clickLoc, {
             draggable:true
         });
-        function removeMarker(group) {
-            var group = markerGroup 
-            markerGroup.removeLayer();
-        };
-       
-        
+      
         var distance = redIguana.distanceTo(clickLoc);   //distance to redIguana
         
         function tokm(meters){
@@ -128,15 +122,25 @@
         var distancekm = tokm(distance);
         var popup = "<b>Distance to Tacos:</b><br>"
                         +distancekm.toLocaleString()+"<b> km</b><div>"
-                    
-        clickMarker.addTo(map).bindPopup(popup).openPopup();
-        clickMarker.addTo(markerGroup);
         
+        clickMarker.addTo(markerGroup);           
+        markerGroup.addTo(map);
+        clickMarker.bindPopup(popup).openPopup();
          
         clickMarker.on('dragend', function(e) {  //change distance to redIguana
         var newLoc = clickMarker.getLatLng();
         var distanceAdj = redIguana.distanceTo(newLoc);
-        var distance = distanceAdj
+            
+            function tokmAgain(meters){
+            var meters = distanceAdj;
+            return meters/1000;
+        }
+  
+        var distancekm2 = tokmAgain(distance);
+            
+        clickMarker._popup.setContent("<b>Distance to Tacos:</b><br>"
+                        +distancekm2.toLocaleString()+"<b> km</b><div>");
+        clickMarker.openPopup();
         
    });
         
