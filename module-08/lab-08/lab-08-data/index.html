@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Lab 08 Starter</title>
+    <title>Renewable Energy Production</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
@@ -15,7 +15,7 @@
         body {
             margin: 0;
             padding: 0;
-            background: whitesmoke;
+            background: aliceblue;
             font-family: Lato, sans-serif;
             color: #0D0000;
         }
@@ -25,11 +25,12 @@
         h1 {
             display: inline-block;
             margin-right: 20px;
-            color: #001323;
+            color: darkgreen;
         }
         h2 {
             display: inline-block;
-            color: #001323;
+            color: skyblue;
+            
         }
         #map {
             width: 80%;
@@ -41,23 +42,32 @@
             width: 80%;
         }
         p {
-            font-size: 1em;
-            color: #001323;
+            font-size: .8em;
+            color: navy;
         }
+        a {
+            color: darkgreen;
+            font-weight: bold;
+            text-decoration: none; 
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        
     </style>
 </head>
 
 <body>
     <header>
-        <h1>Map Title</h1>
-        <h2>Map Subtitle</h2>
+        <h1>U.S. Renewable Energy Production</h1>
+        <h2>Mapping hydroelectric and wind production in the United States</h2>
     </header>
 
     <div id='map'></div>
 
     <footer>
-        <p>Map authored by YOUR NAME</p>
-        <p>Additional information about the data and map goes here.</p>
+        <p>Map authored by Ryan Rogers, 2016.</p>
+        <p>Map data provided by <a href="http://www.openstreetmap.org">OpenStreetMap</a>. Tiles from <a href="http://www.cartodb.com">CartoDB</a>. Energy production information gathered from the <a href="http://www.eia.gov">U.S. Energy Information Administration</a>.
     </footer>
 
     <script src="power-plants.js"></script>
@@ -68,25 +78,83 @@
           zoom: 4,
       });
       
-      var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-          subdomains: 'abcd',
-          maxZoom: 19
-      });  
+      var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+	           attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a                   href="http://cartodb.com/attributions">CartoDB</a>',
+	           subdomains: 'abcd',
+	           maxZoom: 19
+      });
       
       tiles.addTo(map);
+        
+        plants.features.sort(function(a, b) {
+            return b.properties.capacity_mw - a.properties.capacity_mw;
+        })
       
       L.geoJson(plants, {
           pointToLayer: function(feature,latlng) {
               return L.circleMarker(latlng, {
-                 color: 'orange',
+                 color: chooseColor(),
                  weight: 1,
-                 fillColor: 'yellow',
-                 fillOpacity: 1,
-                 radius: 2
-              });   
+                 fillColor: chooseFill(),
+                 fillOpacity: .4,
+                 radius: getRadius(feature.properties.capacity_mw)
+              });
+              function chooseColor() {
+                if(feature.properties.fuel_source.Hydro) {
+                    return 'sky-blue';
+                } else if(feature.properties.fuel_source.Wind){
+                    return 'limegreen';
+                }
+              };
+              function chooseFill(fuel) {
+                if(feature.properties.fuel_source.Hydro) {
+                    return 'darkblue';
+                } else if(feature.properties.fuel_source.Wind){
+                    return 'darkgreen';
+                }
+              };
+                  
+          },
+          filter: function (feature, layer) {
+              if(feature.properties.fuel_source.Hydro || feature.properties.fuel_source.Wind) {
+                  return feature;
+              };
+          },
+          onEachFeature : function(feature, layer) {
+              layer.on('mouseover', function() {
+                  layer.setStyle({
+                      fillColor: 'red',
+                      fillOpacity: 1
+                });
+                  
+                  var popup = "<b>"+feature.properties.plant_name+"</b><br>"+feature.properties.capacity_mw.toLocaleString()+" MW<div>";
+                  
+                  layer.bindPopup(popup);
+                 
+                });
+              layer.on('mouseout', function() {
+                  layer.setStyle({
+                      fillColor: chooseFill(),
+                      fillOpacity: .4
+                  });
+                  function chooseFill(fuel) {
+                if(feature.properties.fuel_source.Hydro) {
+                    return 'darkblue';
+                } else if(feature.properties.fuel_source.Wind){
+                    return 'darkgreen';
+                }
+                };
+        
+                });
           }
       }).addTo(map);
+        
+                function getRadius(area) {
+                    var radius = Math.sqrt(area/Math.PI);
+                    return radius * .6;
+                };
+       
+        
 
                   
     </script>
