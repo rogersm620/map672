@@ -140,7 +140,7 @@
                     });
                     
                     
-                    var popup = "<b>"+geoJsonLayers.properties.plant_name+"</b><br>"+geoJsonLayers.properties.capacity_mw.toLocaleString()+" MW<div>";
+                    var popup = "<b>"+layer.feature.properties.plant_name+"</b><br>"+layer.feature.properties.capacity_mw.toLocaleString()+" MW<div>";
                   
                   layer.bindPopup(popup);
                     
