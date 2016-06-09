@@ -75,6 +75,92 @@
       });  
       
       tiles.addTo(map);
+        
+        plants.features.sort(function(a, b) {
+            return b.properties.capacity_mw - a.properties.capacity_mw;
+        });
+        
+        var commonStyles = {
+            weight: 1,
+            stroke: 1,
+            fillOpacity: .4
+        };
+        
+        var layerInfo = {
+            nuclearLayer: {source: "Nuclear", color: 'limegreen' },
+            windLayer: {source: "Wind", color: '#a6cee3' },
+            gasLayer: {source: "Natural Gas", color: '#ffffe0'}
+        };
+        
+        var geoJsonLayers = {};
+        
+        
+        
+        for(var layer in layerInfo) {
+        geoJsonLayers[layer] = L.geoJson(plants, {
+            pointToLayer: function(feature, latlng) {
+                return L.circleMarker(latlng, commonStyles);
+            },
+            filter: function(feature) {
+                if(feature.properties.fuel_source[layerInfo[layer].source]) {
+                    return feature;
+                }
+            },
+            style: function(feature) {
+                return{
+                    color: layerInfo[layer].color,
+                    fillColor: layerInfo[layer].color,
+                    radius: getRadius(feature.properties.fuel_source[layerInfo[layer].source])
+                }
+            }
+        }).addTo(map);
+        }
+        
+        var sourcesLayers = {
+            "<b style='color:limegreen'>Nuclear</>": geoJsonLayers.nuclearLayer,
+            "<b style='color:#a6cee3'>Wind</>": geoJsonLayers.windLayer,
+            "<b style='color:#ffffe0; text-shadow: 0px 0px 1px #333;'>Natural Gas</>": geoJsonLayers.gasLayer
+        };
+
+        
+        map.on('click', function(e) {
+            for(var layer in geoJsonLayers) {
+            geoJsonLayers[layer].eachLayer(function(layer) {
+                var distance = e.latlng.distanceTo(layer.getLatLng())/1000; //distance as km
+                
+                if (distance > 500) {
+                    layer.setStyle({
+                        stroke: false,
+                        fill: false
+                    });
+                } else {
+                    layer.setStyle({
+                        stroke: true,
+                        fill: true
+                    });
+                    
+                    
+                    var popup = "<b>"+layer.properties.plant_name+"</b><br>"+layer.properties.capacity_mw.toLocaleString()+" MW<div>";
+                  
+                  layer.bindPopup(popup);
+                    
+                    //layer.bindPopup("I am <b>"+distance.toLocaleString()+" km</b><br> from the click point.");
+                }
+            });
+        }
+    });
+        
+        
+        
+        L.control.layers(null, sourcesLayers, { collapsed:false }).addTo(map);
+        
+        
+        
+        function getRadius(area) {
+            var radius = Math.sqrt(area/Math.PI);
+            return radius * .6;
+        };
+        
                   
     </script>
     
