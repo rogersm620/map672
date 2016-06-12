@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Lab 09 Template</title>
+    <title>US Electric Power Generation</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
@@ -25,11 +25,11 @@
         h1 {
             display: inline-block;
             margin-right: 20px;
-            color: #001323;
+            color: #a6cee3;
         }
         h2 {
             display: inline-block;
-            color: #001323;
+            color: #a6cee3;
         }
         #map {
             width: 80%;
@@ -41,23 +41,31 @@
             width: 80%;
         }
         p {
-            font-size: 1em;
+            font-size: .8em;
             color: #001323;
+        }
+        a {
+            color: darkgreen;
+            font-weight: bold;
+            text-decoration: none; 
+        }
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 
 <body>
     <header>
-        <h1>Map Title</h1>
-        <h2>Map Subtitle</h2>
+        <h1>U.S. Electric Power Generation</h1>
+        <h2>Non-coal Sources</h2>
     </header>
 
     <div id='map'></div>
 
     <footer>
-        <p>Map authored by YOUR NAME</p>
-        <p>Additional information about the data and map goes here.</p>
+        <p>Map authored by Ryan Rogers, 2016.</p>
+        <p>Map data provided by <a href="http://www.openstreetmap.org">OpenStreetMap</a>. Tiles from <a href="http://www.cartodb.com">CartoDB</a>. Energy production information gathered from the <a href="http://www.eia.gov">U.S. Energy Information Administration</a>.
     </footer>
 
     <script src="power-plants.js"></script>
@@ -94,6 +102,13 @@
         
         var geoJsonLayers = {};
         
+        var spotlight = L.circle([0,0], 500000, {
+            fillColor: true,
+            fillOpacity: .1,
+            stroke: false,
+            weight: 3,
+        }).addTo(map);
+        
         
         
         for(var layer in layerInfo) {
@@ -124,6 +139,8 @@
 
         
         map.on('click', function(e) {
+            spotlight.setStyle({fillColor: 'grey'}).setLatLng(e.latlng);
+            
             for(var layer in geoJsonLayers) {
             geoJsonLayers[layer].eachLayer(function(layer) {
                 var distance = e.latlng.distanceTo(layer.getLatLng())/1000; //distance as km
@@ -139,12 +156,20 @@
                         fill: true
                     });
                     
+                    var fuelSource = layer.feature.properties.fuel_source;
+                    function displaySources(fuelSource) {
+                        for (var i = 0; i < fuelSource.length; i++) {
+                            return fuelSource
+                        }
+                    };
+                    var sources = displaySources(fuelSource);
+                    console.log();
                     
-                    var popup = "<b>"+layer.feature.properties.plant_name+"</b><br>"+layer.feature.properties.capacity_mw.toLocaleString()+" MW<div>";
+                    var popup = "<b>"+layer.feature.properties.plant_name+"</b><br>"+Object.getOwnPropertyNames(layer.feature.properties.fuel_source)+"<br>Distance from point: "+distance.toLocaleString()+" km<div>";
                   
                   layer.bindPopup(popup);
                     
-                    //layer.bindPopup("I am <b>"+distance.toLocaleString()+" km</b><br> from the click point.");
+                    
                 }
             });
         }
